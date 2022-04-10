@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-const { Sequelize } = require('sequelize')
 const Pixel = require('../utils/database')
 
 router.get('/remaining', async (req, res, next) => {
   if (req.query.uid === undefined) {
     res.status(400);
     res.json({status: 'error', message: 'Missing URL query uid'});
+    return;
   }
   const pixels = await Pixel.findAll({
     where: {
@@ -46,6 +46,7 @@ router.get('/all', async (req, res, next) => {
   if (req.query.uid === undefined) {
     res.status(400);
     res.json({status: 'error', message: 'Missing URL query uid'});
+    return;
   }
   const pixels = await Pixel.findAll({
     where: {
