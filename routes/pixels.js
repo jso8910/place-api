@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Pixel = require('../utils/database')
+const { Op } = require("sequelize");
 
 router.get('/remaining', async (req, res, next) => {
   if (req.query.uid === undefined) {
@@ -10,14 +11,20 @@ router.get('/remaining', async (req, res, next) => {
   }
   const pixels = await Pixel.findAll({
     where: {
-      user_id: req.query.uid
+      user_id: req.query.uid,
+      timestamp: {
+          [Op.lt]: new Date('2022-04-04 22:47:40.185000 UTC')
+      }
     }
   });
   const pixel_on_coords = await Promise.all(pixels.map(pixel => {
     return Pixel.findAll({
       where: {
         x: pixel.x,
-        y: pixel.y
+        y: pixel.y,
+        timestamp: {
+          [Op.lt]: new Date('2022-04-04 22:47:40.185000 UTC')
+        }
       }
     });
   }));
