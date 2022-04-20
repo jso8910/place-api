@@ -26,7 +26,6 @@ def progressbar(it, prefix="", size=100, file=sys.stdout):
     file.flush()
 
 print("Small note before you run this script. If you don't already know, this will take at the very least 55gb of storage. If you need to download the r/place dataset, add another 30gb to that.")
-input("Press enter to continue. ")
 
 print("Running migrations...")
 subprocess.run(['npx', 'sequelize', 'db:migrate'])
